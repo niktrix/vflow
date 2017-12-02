@@ -31,7 +31,7 @@ import (
 	"time"
 
 	"github.com/VerizonDigital/vflow/netflow/v9"
-	"github.com/VerizonDigital/vflow/producer"
+	//"github.com/VerizonDigital/vflow/producer"
 )
 
 // NetflowV9 represents netflow v9 collector
@@ -112,19 +112,19 @@ func (i *NetflowV9) run() {
 
 	mCacheNF9 = netflow9.GetCache(opts.NetflowV9TplCacheFile)
 
-	go func() {
-		p := producer.NewProducer(opts.MQName)
+	// go func() {
+	// 	p := producer.NewProducer(opts.MQName)
 
-		p.MQConfigFile = opts.MQConfigFile
-		p.MQErrorCount = &i.stats.MQErrorCount
-		p.Logger = logger
-		p.Chan = netflowV9MQCh
-		p.Topic = opts.NetflowV9Topic
+	// 	p.MQConfigFile = opts.MQConfigFile
+	// 	p.MQErrorCount = &i.stats.MQErrorCount
+	// 	p.Logger = logger
+	// 	p.Chan = netflowV9MQCh
+	// 	p.Topic = opts.NetflowV9Topic
 
-		if err := p.Run(); err != nil {
-			logger.Fatal(err)
-		}
-	}()
+	// 	if err := p.Run(); err != nil {
+	// 		logger.Fatal(err)
+	// 	}
+	// }()
 
 	go func() {
 		if !opts.DynWorkers {

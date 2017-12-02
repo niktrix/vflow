@@ -32,7 +32,7 @@ import (
 	"time"
 
 	"github.com/VerizonDigital/vflow/packet"
-	"github.com/VerizonDigital/vflow/producer"
+	//"github.com/VerizonDigital/vflow/producer"
 	"github.com/VerizonDigital/vflow/sflow"
 )
 
@@ -111,19 +111,19 @@ func (s *SFlow) run() {
 
 	logger.Printf("sFlow is running (UDP: listening on [::]:%d workers#: %d)", s.port, s.workers)
 
-	go func() {
-		p := producer.NewProducer(opts.MQName)
+	// go func() {
+	// 	p := producer.NewProducer(opts.MQName)
 
-		p.MQConfigFile = opts.MQConfigFile
-		p.MQErrorCount = &s.stats.MQErrorCount
-		p.Logger = logger
-		p.Chan = sFlowMQCh
-		p.Topic = opts.SFlowTopic
+	// 	p.MQConfigFile = opts.MQConfigFile
+	// 	p.MQErrorCount = &s.stats.MQErrorCount
+	// 	p.Logger = logger
+	// 	p.Chan = sFlowMQCh
+	// 	p.Topic = opts.SFlowTopic
 
-		if err := p.Run(); err != nil {
-			logger.Fatal(err)
-		}
-	}()
+	// 	if err := p.Run(); err != nil {
+	// 		logger.Fatal(err)
+	// 	}
+	// }()
 
 	go func() {
 		if !opts.DynWorkers {

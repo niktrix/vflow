@@ -31,7 +31,7 @@ import (
 	"time"
 
 	"github.com/VerizonDigital/vflow/ipfix"
-	"github.com/VerizonDigital/vflow/producer"
+	//"github.com/VerizonDigital/vflow/producer"
 )
 
 // IPFIX represents IPFIX collector
@@ -114,26 +114,26 @@ func (i *IPFIX) run() {
 	logger.Printf("ipfix is running (UDP: listening on [::]:%d workers#: %d)", i.port, i.workers)
 
 	mCache = ipfix.GetCache(opts.IPFIXTplCacheFile)
-	go ipfix.RPC(mCache, &ipfix.RPCConfig{
-		Enabled: opts.IPFIXRPCEnabled,
-		Logger:  logger,
-	})
+	// go ipfix.RPC(mCache, &ipfix.RPCConfig{
+	// 	Enabled: opts.IPFIXRPCEnabled,
+	// 	Logger:  logger,
+	// })
 
 	go mirrorIPFIXDispatcher(ipfixMCh)
 
-	go func() {
-		p := producer.NewProducer(opts.MQName)
+	// go func() {
+	// 	p := producer.NewProducer(opts.MQName)
 
-		p.MQConfigFile = opts.MQConfigFile
-		p.MQErrorCount = &i.stats.MQErrorCount
-		p.Logger = logger
-		p.Chan = ipfixMQCh
-		p.Topic = opts.IPFIXTopic
+	// 	p.MQConfigFile = opts.MQConfigFile
+	// 	p.MQErrorCount = &i.stats.MQErrorCount
+	// 	p.Logger = logger
+	// 	p.Chan = ipfixMQCh
+	// 	p.Topic = opts.IPFIXTopic
 
-		if err := p.Run(); err != nil {
-			logger.Fatal(err)
-		}
-	}()
+	// 	if err := p.Run(); err != nil {
+	// 		logger.Fatal(err)
+	// 	}
+	// }()
 
 	go func() {
 		if !opts.DynWorkers {
