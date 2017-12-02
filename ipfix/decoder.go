@@ -101,7 +101,6 @@ func NewDecoder(raddr net.IP, b []byte) *Decoder {
 // Decode decodes the IPFIX raw data
 func (d *Decoder) Decode(mem MemCache) (*Message, error) {
 	var msg = new(Message)
-
 	// IPFIX Message Header decoding
 	if err := msg.Header.unmarshal(d.reader); err != nil {
 		return nil, err
@@ -128,7 +127,8 @@ func (d *Decoder) Decode(mem MemCache) (*Message, error) {
 			}
 		}
 	}
-
+	fmt.Println("msg",msg)
+	
 	return msg, combineErrors(decodeErrors...)
 }
 
